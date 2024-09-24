@@ -12,3 +12,17 @@ export const EventSchema = new Schema({
   type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'], required: true },
   creatorId: { type: Schema.ObjectId, ref: 'Account', required: true }
 }, { timestamps: true, toJSON: { virtuals: true } })
+
+EventSchema.virtual('creator', {
+  localField: 'creatorId',
+  ref: 'Account',
+  foreignField: '_id',
+  justOne: true
+})
+
+EventSchema.virtual('ticketCount', {
+  localField: '_id',
+  ref: 'Ticket',
+  foreignField: 'eventId',
+  justOne: true
+})
