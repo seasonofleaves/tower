@@ -31,6 +31,9 @@ const props = defineProps({ event: {type: Event, required: true}})
         <p>{{ event.startDate.toDateString() }} - {{ event.location }}</p>
         <p>Capacity : {{ event.capacity }}</p>
       </div>
+      <div v-if="event.isCanceled == true">
+        <span class="bg-danger">Event is cancelled</span>
+      </div>
     </div>
   </router-link>
 </template>
