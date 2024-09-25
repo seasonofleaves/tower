@@ -7,7 +7,7 @@ import { TicketSchema } from '../models/Ticket.js';
 class DbContext {
 
   Tickets = mongoose.model('Ticket', TicketSchema)
-  Events = mongoose.model('Event', EventSchema);
+  Events = mongoose.model('TowerEvent', EventSchema);
   Account = mongoose.model('Account', AccountSchema);
 }
 

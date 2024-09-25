@@ -19,20 +19,20 @@ class EventsService {
   }
 
   async getAllEvents() {
-    const events = await dbContext.Events.find().populate('creator')
+    const events = (await dbContext.Events.find().populate('creator').populate('ticketCount'))
     return events
   }
 
   async getEventById(eventId) {
-    const event = await dbContext.Events.findById(eventId).populate('creator')
+    const event = await (await dbContext.Events.findById(eventId).populate('creator')).populate('ticketCount')
     //NOTE - good practice to make sure that an invalid eventId doesn't create a silent error
     if (event == null) throw new Error(`No event with id ${eventId}`)
     return event
   }
 
-  async cancelEvent(eventId, userId){
+  async cancelEvent(eventId, userId) {
     const eventToCancel = await this.getEventById(eventId)
-    if(userId != eventToCancel.creatorId) throw new Forbidden("Invalid credentials")
+    if (userId != eventToCancel.creatorId) throw new Forbidden("Invalid credentials")
     eventToCancel.isCanceled = !eventToCancel.isCanceled
     await eventToCancel.save()
     return 'Event has been canceled'

@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 
 export const TicketSchema = new Schema({
   accountId: { type: Schema.ObjectId, required: true, ref: 'Account' },
-  eventID: { type: Schema.ObjectId, required: true, ref: 'TowerEvent' }
+  eventId: { type: Schema.ObjectId, required: true, ref: 'TowerEvent' }
 }, { toJSON: { virtuals: true } })
 
 TicketSchema.virtual('profile', {
