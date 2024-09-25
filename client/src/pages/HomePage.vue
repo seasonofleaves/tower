@@ -6,9 +6,23 @@ import ModalWrapper from '@/components/ModalWrapper.vue';
 import { eventsService } from '@/services/EventsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const events = computed(() => AppState.events)
+const filterBy = ref('all')
+const events = computed(() => {
+  if(filterBy.value == 'all'){
+    return AppState.events
+  }
+  return AppState.events.filter(event => event.type == filterBy.value)
+})
+
+const filterTypes = [
+  {text: 'all'},
+  {text: 'concert'},
+  {text: 'convention'},
+  {text: 'sport'},
+  {text: 'digital'},
+]
 
 onMounted(() => {
   getAllEvents()
@@ -31,6 +45,19 @@ async function getAllEvents(){
     <EventForm/>
   </ModalWrapper>
   <section class="row">
+    <p>Find your interests</p>
+    <hr/>
+  </section>
+  <section class="row justify-content-around">
+    <div v-for="type in filterTypes" :key="type.text" class="col- col-md-2">
+      <button @click="filterBy = type.text" type="button" class="btn filter-btn p-0 border-0 w-100">
+        <div class="p-3">
+          {{ type.text }}
+        </div>
+      </button>
+    </div>
+  </section>
+  <section class="row">
     <div class="col-12">
       <h1>Upcoming Events</h1>
     </div>
@@ -51,5 +78,9 @@ async function getAllEvents(){
 </template>
 
 <style scoped lang="scss">
-
+.filter-btn{
+  color: white;
+  background-color: rgb(102, 94, 155);
+  font-weight: 600;
+}
 </style>
