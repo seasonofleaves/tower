@@ -58,7 +58,7 @@ function resetForm(){
   </div>
   <div class="col-md-4">
     <label for="event-date">Event Date</label>
-    <input v-model="eventData.startDate" class="form-control" type="date" required name="event-date" id="event-date">
+    <input v-model="eventData.startDate" class="form-control" type="datetime-local" required name="event-date" id="event-date">
   </div>
   <div class="col-md-4">
     <label for="event-location">Event Location</label>
@@ -77,9 +77,11 @@ function resetForm(){
     <input v-model="eventData.coverImg" class="form-control" type="url" required minlength="10" maxlength="500" name="event-image" id="event-image">
   </div>
   <div class="col-md-4">
-    <select v-model="eventData.type" class="form-select" aria-label="Event Type">
-      <option v-for="eventType in eventTypes" :key="eventType" value="eventType">
-        {{ eventType }}
+    <label for="event-type">Event Type</label>
+    <select v-model="eventData.type" class="form-control" name="event-type" id="event-type">
+      <option disabled value="">-- select one --</option>
+      <option v-for="type in eventTypes" :key="type" :value="type">
+        {{ type }}
       </option>
     </select>
   </div>

@@ -10,6 +10,7 @@ class EventsService {
     AppState.events.push(createEvent)
     return createEvent
   }
+  
   async getEventById(eventId) {
     const response = await api.get(`api/events/${eventId}`)
     logger.log('Got event - event service', response.data)
