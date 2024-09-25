@@ -34,9 +34,22 @@ async function getEventById(){
 
 <template>
 <div class="container">
-  <section class="row">
+  <section v-if="event" class="row">
     <div class="col-12">
-      <h1>{{ event }}</h1>
+      <div class="d-flex justify-content-center">
+        <img :src="event.coverImg" alt="Image of event">
+      </div>
+    </div>
+    <div class="col-md-7 d-flex">
+      <h1>{{ event.name }}</h1>
+      <span class="btn btn-info rounded-pill align-content-center">{{ event.type }}</span>
+    </div>
+    <div class="col-7">
+      <p>{{ event.description }}</p>
+      <h4>Date and Time</h4>
+      <p>{{ event.startDate.toLocaleString() }}</p>
+      <h4>Location</h4>
+      <p>{{ event.location }}</p>
     </div>
   </section>
 </div>
