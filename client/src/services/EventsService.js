@@ -7,9 +7,9 @@ class EventsService {
   async getEventById(eventId) {
     const response = await api.get(`api/events/${eventId}`)
     logger.log('Got event - event service', response.data)
-    const newEvent = new Event(response.data)
-    AppState.activeEvent = newEvent
+    AppState.activeEvent = new Event(response.data)
   }
+  
   async getAllEvents() {
     const response = await api.get('api/events')
     logger.log('', response.data)
