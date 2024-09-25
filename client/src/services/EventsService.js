@@ -10,7 +10,7 @@ class EventsService {
     AppState.events.push(createEvent)
     return createEvent
   }
-  
+
   async getEventById(eventId) {
     const response = await api.get(`api/events/${eventId}`)
     logger.log('Got event - event service', response.data)
@@ -22,6 +22,11 @@ class EventsService {
     logger.log('', response.data)
     const newEvents = response.data.map(eventData => new Event(eventData))
     AppState.events = newEvents
+  }
+
+  async cancelEvent(eventId) {
+    const response = await api.delete(`api/events/${eventId}`)
+    logger.log('Canceled event', response.data)
   }
 
 }

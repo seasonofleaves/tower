@@ -1,9 +1,11 @@
 import { dbContext } from "../db/DbContext.js"
+import { Forbidden } from "../utils/Errors.js"
 
 
 class EventsService {
   async editEvent(eventId, eventData) {
     const eventToUpdate = await dbContext.Events.findById(eventId)
+    if (eventId.isCanceled) throw new Error(`This event is canceled`)
     eventToUpdate.name = eventData.name ?? eventToUpdate.name
     eventToUpdate.description = eventData.description ?? eventToUpdate.description
     await eventToUpdate.save()
@@ -26,6 +28,14 @@ class EventsService {
     //NOTE - good practice to make sure that an invalid eventId doesn't create a silent error
     if (event == null) throw new Error(`No event with id ${eventId}`)
     return event
+  }
+
+  async cancelEvent(eventId, userId){
+    const eventToCancel = await this.getEventById(eventId)
+    if(userId != eventToCancel.creatorId) throw new Forbidden("Invalid credentials")
+    eventToCancel.isCanceled = !eventToCancel.isCanceled
+    await eventToCancel.save()
+    return 'Event has been canceled'
   }
 }
 

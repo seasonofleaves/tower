@@ -15,11 +15,16 @@ onMounted(() => {
   getEventById()
 })
 
-// const thereIsAnEvent = computed(() => {
-//   if(event.value == null) return false
-//   if(event.value != null) return true
-//   return
-// })
+async function cancelEvent(){
+  try {
+    const wantsToCancel = await Pop.confirm(`Are you sure you want to cancel this event?`)
+    if(!wantsToCancel) return
+    await eventsService.cancelEvent(route.params.eventId)
+  } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
 
 async function getEventById(){
   try {
@@ -44,12 +49,20 @@ async function getEventById(){
       <h1>{{ event.name }}</h1>
       <span class="btn btn-info rounded-pill align-content-center">{{ event.type }}</span>
     </div>
+    <div class="col-5">
+      <div v-if="event.isCanceled == true">
+        <h1>Event is canceled</h1>
+      </div>
+    </div>
     <div class="col-7">
       <p>{{ event.description }}</p>
       <h4>Date and Time</h4>
       <p>{{ event.startDate.toLocaleString() }}</p>
       <h4>Location</h4>
       <p>{{ event.location }}</p>
+    </div>
+    <div class="col-5">
+      <button @click="cancelEvent()" class="btn btn-danger" type="button">Cancel Event</button>
     </div>
   </section>
 </div>

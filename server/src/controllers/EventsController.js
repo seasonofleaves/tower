@@ -12,6 +12,7 @@ export class EventsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createEvent)
       .put('/:eventId', this.editEvent)
+      .delete('/:eventId', this.cancelEvent)
   }
   async createEvent(request, response, next) {
     try {
@@ -50,6 +51,17 @@ export class EventsController extends BaseController {
       const eventData = request.body
       const event = await eventsService.editEvent(eventId, eventData)
       response.send(event)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async cancelEvent(request, response, next) {
+    try {
+      const eventId = request.params.eventId
+      const userId = request.userInfo.id
+      const message = await eventsService.cancelEvent(eventId, userId)
+      response.send(message)
     } catch (error) {
       next(error)
     }

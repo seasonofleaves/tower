@@ -1,7 +1,21 @@
 <script setup>
 import { Event } from '@/models/Event.js';
+import { eventsService } from '@/services/EventsService.js';
+import { logger } from '@/utils/Logger.js';
+import Pop from '@/utils/Pop.js';
 
-defineProps({ event: {type: Event, required: true}})
+const props = defineProps({ event: {type: Event, required: true}})
+
+// async function cancelEvent(){
+//   try {
+//     const wantsToCancel = await Pop.confirm(`Are you sure you want to cancel this event?`)
+//     if(!wantsToCancel) return
+//     await eventsService.cancelEvent(props.event.id)
+//   } catch (error) {
+//     Pop.error(error)
+//     logger.log(error)
+//   }
+// }
 
 </script>
 
