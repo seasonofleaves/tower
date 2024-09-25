@@ -8,7 +8,7 @@ defineProps({ event: {type: Event, required: true}})
 
 <template>
    <div class="card my-2">
-    <router-link :to="{name: 'EventDetails'}" :title="`Go to ${event.name}'s details page!'`">
+    <router-link :to="{name: 'EventDetails', params: {eventId: event.id}}" :title="`Go to ${event.name}'s details page!'`">
       <img :src="event.coverImg" class="card-img-top" alt="Event cover image">
     </router-link>
       
