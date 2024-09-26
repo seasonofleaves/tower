@@ -1,4 +1,5 @@
 import { Profile } from "./Profile.js"
+import { Event } from '@/models/Event.js';
 
 export class Tickets {
   constructor(data) {

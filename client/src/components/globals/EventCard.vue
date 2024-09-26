@@ -1,21 +1,7 @@
 <script setup>
 import { Event } from '@/models/Event.js';
-import { eventsService } from '@/services/EventsService.js';
-import { logger } from '@/utils/Logger.js';
-import Pop from '@/utils/Pop.js';
 
 const props = defineProps({ event: {type: Event, required: true}})
-
-// async function cancelEvent(){
-//   try {
-//     const wantsToCancel = await Pop.confirm(`Are you sure you want to cancel this event?`)
-//     if(!wantsToCancel) return
-//     await eventsService.cancelEvent(props.event.id)
-//   } catch (error) {
-//     Pop.error(error)
-//     logger.log(error)
-//   }
-// }
 
 </script>
 
@@ -27,7 +13,7 @@ const props = defineProps({ event: {type: Event, required: true}})
       
       <div class="card-body">
         <h5 class="card-title">{{ event.name }}</h5>
-        <p class="card-text">Hosted by {{ event.creator.name }}</p>
+        <p v-if="event.creator" class="card-text">Hosted by {{ event.creator.name }}</p>
         <p>{{ event.startDate.toDateString() }} - {{ event.location }}</p>
         <p>Capacity : {{ event.capacity }}</p>
       </div>

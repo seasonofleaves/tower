@@ -4,9 +4,10 @@ import { AppState } from '../AppState.js';
 import Pop from '@/utils/Pop.js';
 import { logger } from '@/utils/Logger.js';
 import { ticketsService } from '@/services/TicketsService.js';
+import EventCard from '@/components/globals/EventCard.vue';
 
 const account = computed(() => AppState.account)
-const ticketsPerEvent = computed(() => AppState.ticketProfiles)
+const ticketsPerEvent = computed(() => AppState.eventTickets)
 
 onMounted(() => {
   getAccountTickets()
@@ -41,6 +42,12 @@ try {
       <h1>Welcome {{ account.name }}</h1>
       <img class="rounded" :src="account.picture" alt="" />
       <p>{{ account.email }}</p>
+      <section class="row g-3">
+        <div v-for="ticket in ticketsPerEvent" :key="ticket.id" class="col-md-4">
+          <EventCard :event="ticket.event"/>
+        </div>
+      </section>
+
     </div>
     <div v-else>
       <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>

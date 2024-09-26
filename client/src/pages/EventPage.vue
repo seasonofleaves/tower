@@ -20,6 +20,14 @@ const isAttendingEvent = computed(() =>{
   return true
 })
 
+const canAttendEvent = computed(() => {
+  if(AppState.identity == null) return false
+  if(isAttendingEvent.value) return false
+  if(AppState.activeEvent?.isCanceled == true) return false
+  if(AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) return false
+  return true
+})
+
 onMounted(() => {
   getEventById()
   getEventTicketHolders()
@@ -73,7 +81,7 @@ async function getEventTicketHolders(){
   <section v-if="event" class="row">
     <div class="col-12">
       <div class="d-flex justify-content-center">
-        <img :src="event.coverImg" alt="Image of event">
+        <img class="img-fluid cover-img" :src="event.coverImg" alt="Image of event">
       </div>
     </div>
     <div class="col-md-7 d-flex">
@@ -100,7 +108,7 @@ async function getEventTicketHolders(){
         Attending: {{ event.ticketCount }}
       </div>
       <div>
-        <button v-if="!isAttendingEvent" @click="createTicket()" class="btn btn-info">
+        <button v-if="!isAttendingEvent" :disabled="!canAttendEvent" @click="createTicket()" class="btn btn-info">
           Get Ticket!
         </button>
       </div>
@@ -119,5 +127,13 @@ async function getEventTicketHolders(){
   aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
+}
+
+.cover-img{
+  width: 90%;
+  max-height: 50vh;
+  object-fit: cover;
+  object-position: center;
+
 }
 </style>
