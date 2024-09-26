@@ -45,6 +45,7 @@ try {
       <section class="row g-3">
         <div v-for="ticket in ticketsPerEvent" :key="ticket.id" class="col-md-4">
           <EventCard :event="ticket.event"/>
+          <button @click="deleteTicket(ticket.id)" class="btn btn-danger">Leave Event</button>
         </div>
       </section>
 
