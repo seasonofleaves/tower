@@ -5,13 +5,16 @@ import { eventsService } from '@/services/EventsService.js';
 import { ticketsService } from '@/services/TicketsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 
 const route = useRoute()
 const event = computed(() => AppState.activeEvent)
 const ticketerProfiles = computed(() => AppState.ticketProfiles)
+const commentData = ref({
+  body: '',
+})
 
 const isAttendingEvent = computed(() =>{
   if (AppState.identity == null) return false
@@ -79,6 +82,12 @@ async function getEventTicketHolders(){
   }
 }
 
+function resetCommentForm(){
+  commentData.value = {
+    body: ''
+  }
+}
+
 </script>
 
 <template>
@@ -137,7 +146,7 @@ async function getEventTicketHolders(){
           <div class="text-end">
             <label for="comment-body">Join the conversation</label>
           </div>
-          <textarea class="form-control" minlength="1" maxlength="500" name="comment-body" id="comment-body"></textarea>
+          <textarea v-model="commentData.body" class="form-control" minlength="1" maxlength="500" name="comment-body" id="comment-body"></textarea>
           <div class="text-end">
             <button class="btn btn-info" type="submit">Post Comment</button>
           </div>
