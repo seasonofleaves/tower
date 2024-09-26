@@ -43,6 +43,7 @@ const isSoldOut = computed(() => {
 onMounted(() => {
   getEventById()
   getEventTicketHolders()
+  getAllEventComments()
 })
 
 async function cancelEvent(){
@@ -81,6 +82,16 @@ async function getEventTicketHolders(){
   try {
     await ticketsService.getEventTicketHolders(route.params.eventId)
   } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
+
+async function getAllEventComments(){
+  try {
+    await commentsService.getAllEventComments(route.params.eventId)
+  }
+  catch (error){
     Pop.error(error)
     logger.log(error)
   }
