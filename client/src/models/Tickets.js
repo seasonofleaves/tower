@@ -5,7 +5,6 @@ export class Tickets {
     this.id = data.id
     this.eventId = data.eventId
     this.accountId = data.accountId
-    // testing
   }
 }
 export class TicketProfiles extends Tickets {
