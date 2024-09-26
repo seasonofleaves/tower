@@ -1,6 +1,7 @@
 <script setup>
 
 import { AppState } from '@/AppState.js';
+import CommentCard from '@/components/globals/CommentCard.vue';
 import { commentsService } from '@/services/CommentsService.js';
 import { eventsService } from '@/services/EventsService.js';
 import { ticketsService } from '@/services/TicketsService.js';
@@ -11,6 +12,7 @@ import { useRoute } from 'vue-router';
 
 
 const route = useRoute()
+const comments = computed(() => AppState.comments)
 const event = computed(() => AppState.activeEvent)
 const ticketerProfiles = computed(() => AppState.ticketProfiles)
 const commentData = ref({
@@ -166,6 +168,13 @@ function resetCommentForm(){
             <button class="btn btn-info" type="submit">Post Comment</button>
           </div>
         </form>
+        <div v-for="comment in comments" :key="comment.id">
+
+          <CommentCard :comment="comment"/>
+        </div>
+        <!-- <div class="card">
+          <span>{{ comment.creator.name }}</span>
+        </div> -->
       </div>
     </div>
   </section>
