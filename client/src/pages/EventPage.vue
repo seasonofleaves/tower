@@ -2,6 +2,7 @@
 
 import { AppState } from '@/AppState.js';
 import { eventsService } from '@/services/EventsService.js';
+import { ticketsService } from '@/services/TicketsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
@@ -34,6 +35,27 @@ async function getEventById(){
     logger.error(error)
   }
 }
+
+async function createTicket(){
+  try {
+    const ticketData = {
+    eventId: route.params.eventId
+    }
+    await ticketsService.createTicket(ticketData)
+  } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
+
+// async function getEventTicketers(){
+//   try {
+//     await ticketsService
+//   } catch (error) {
+//     Pop.error(error)
+//     logger.log(error)
+//   }
+// }
 
 </script>
 
