@@ -4,7 +4,13 @@ import { TicketProfiles } from "@/models/Tickets.js"
 import { AppState } from "@/AppState.js"
 
 
-class TicketsService{
+class TicketsService {
+  async getEventTicketHolders(eventId) {
+    const response = await api.get(`api/events/${eventId}/tickets`)
+    logger.log('Ticket holders found', response.data)
+    const ticketHolders = response.data.map(ticketData => new TicketProfiles(ticketData))
+    AppState.ticketProfiles = ticketHolders
+  }
   async createTicket(ticketData) {
     const response = await api.post('api/tickets', ticketData)
     logger.log('Creating Ticket', response.data)

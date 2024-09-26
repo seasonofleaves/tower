@@ -11,9 +11,11 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const event = computed(() => AppState.activeEvent)
+const ticketerProfiles = computed(() => AppState.ticketProfiles)
 
 onMounted(() => {
   getEventById()
+  getEventTicketHolders()
 })
 
 async function cancelEvent(){
@@ -48,14 +50,14 @@ async function createTicket(){
   }
 }
 
-// async function getEventTicketers(){
-//   try {
-//     await ticketsService
-//   } catch (error) {
-//     Pop.error(error)
-//     logger.log(error)
-//   }
-// }
+async function getEventTicketHolders(){
+  try {
+    await ticketsService.getEventTicketHolders(route.params.eventId)
+  } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
 
 </script>
 
@@ -88,9 +90,15 @@ async function createTicket(){
         <button v-if="event.creator" @click="cancelEvent()" class="btn btn-danger" type="button">Cancel Event</button>
       </div>
       <div>
+        Attending: {{ event.ticketCount }}
+      </div>
+      <div>
         <button @click="createTicket()" class="btn btn-info">
           Get Ticket!
         </button>
+      </div>
+      <div v-for="ticketer in ticketerProfiles" :key="ticketer.id">
+        <img class="ticketer-img" :src="ticketer.profile.picture" alt="" :title="ticketer.profile.name">
       </div>
     </div>
   </section>
@@ -99,5 +107,10 @@ async function createTicket(){
 
 
 <style lang="scss" scoped>
-
+.ticketer-img{
+  width: 50px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
+}
 </style>
