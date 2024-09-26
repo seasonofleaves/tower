@@ -6,9 +6,9 @@ export class CommentsController extends BaseController {
   constructor() {
     super(`api/comments`)
     this.router
-      // .get('', this.getEventComments)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createComment)
+      .delete('/:commentId', this.deleteComment)
   }
 
   async createComment(request, response, next) {
@@ -23,13 +23,15 @@ export class CommentsController extends BaseController {
     }
   }
 
-  // async getEventComments(request, response, next){
-  //   try {
-  //     const comments = await commentsService.getEventComments()
-  //     response.send(comments)
-  //   }
-  //   catch (error){
-  //     next(error);
-  //   }
-  // }
+  async deleteComment(request, response, next){
+    try {
+      const commentId = request.params.commentId
+      const userId = request.userInfo.id
+      const message = await commentsService.deleteComment(commentId, userId)
+      response.send(message)
+    }
+    catch (error){
+      next(error);
+    }
+  }
 }

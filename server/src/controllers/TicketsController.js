@@ -30,7 +30,7 @@ export class TicketsController extends BaseController {
       const message = await ticketsService.deleteTicket(ticketId, userId)
       response.send(message)
     } catch (error) {
-      next(error)
+        next(error)
     }
   }
 
