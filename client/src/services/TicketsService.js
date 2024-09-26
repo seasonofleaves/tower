@@ -9,7 +9,7 @@ class TicketsService {
     throw new Error('Method not implemented.')
   }
   getAccountTickets() {
-    throw new Error('Method not implemented.')
+    
   }
   async getEventTicketHolders(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
