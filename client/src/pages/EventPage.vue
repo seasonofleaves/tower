@@ -100,8 +100,8 @@ async function createComment(){
 
 function resetCommentForm(){
   commentData.value = {
-    eventId: '',
-    body: ''
+    body: '',
+    eventId: route.params.eventId
   }
 }
 
