@@ -6,6 +6,7 @@ export class CommentsController extends BaseController {
   constructor() {
     super(`api/comments`)
     this.router
+      // .get('', this.getEventComments)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createComment)
   }
@@ -21,4 +22,14 @@ export class CommentsController extends BaseController {
       next(error)
     }
   }
+
+  // async getEventComments(request, response, next){
+  //   try {
+  //     const comments = await commentsService.getEventComments()
+  //     response.send(comments)
+  //   }
+  //   catch (error){
+  //     next(error);
+  //   }
+  // }
 }

@@ -7,6 +7,11 @@ class CommentsService {
     return comment
   }
 
+  async getEventComments(eventId) {
+    const comments = await dbContext.Comments.find({ eventId: eventId }).populate('creator')
+    return comments
+  }
+
 }
 
 export const commentsService = new CommentsService()
