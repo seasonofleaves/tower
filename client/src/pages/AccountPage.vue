@@ -1,8 +1,37 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+import Pop from '@/utils/Pop.js';
+import { logger } from '@/utils/Logger.js';
+import { ticketsService } from '@/services/TicketsService.js';
 
 const account = computed(() => AppState.account)
+const ticketsPerEvent = computed(() => AppState.ticketProfiles)
+
+onMounted(() => {
+  getAccountTickets()
+})
+
+async function getAccountTickets(){
+  try {
+    await ticketsService.getAccountTickets()
+  } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
+
+async function deleteTicket(ticketId){
+try {
+  const confirmed = await Pop.confirm("Are you sure you want to relinquish your ticket?")
+  if(!confirmed) return
+  await ticketsService.deleteTicket(ticketId)
+  Pop.toast("No longer attending", 'success', 'center')
+} catch (error) {
+  Pop.error(error)
+  logger.log(error)
+}
+}
 
 </script>
 

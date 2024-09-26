@@ -13,6 +13,13 @@ const route = useRoute()
 const event = computed(() => AppState.activeEvent)
 const ticketerProfiles = computed(() => AppState.ticketProfiles)
 
+const isAttendingEvent = computed(() =>{
+  if (AppState.identity == null) return false
+  const youAreAttending = AppState.ticketProfiles.find(ticket => ticket.accountId == AppState.account?.id)
+  if(!youAreAttending) return false
+  return true
+})
+
 onMounted(() => {
   getEventById()
   getEventTicketHolders()
@@ -93,7 +100,7 @@ async function getEventTicketHolders(){
         Attending: {{ event.ticketCount }}
       </div>
       <div>
-        <button @click="createTicket()" class="btn btn-info">
+        <button v-if="!isAttendingEvent" @click="createTicket()" class="btn btn-info">
           Get Ticket!
         </button>
       </div>

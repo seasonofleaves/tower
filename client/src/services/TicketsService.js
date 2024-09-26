@@ -5,6 +5,12 @@ import { AppState } from "@/AppState.js"
 
 
 class TicketsService {
+  deleteTicket(ticketId) {
+    throw new Error('Method not implemented.')
+  }
+  getAccountTickets() {
+    throw new Error('Method not implemented.')
+  }
   async getEventTicketHolders(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
     logger.log('Ticket holders found', response.data)
