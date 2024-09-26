@@ -28,6 +28,11 @@ const canAttendEvent = computed(() => {
   return true
 })
 
+const isSoldOut = computed(() => {
+  if(AppState.activeEvent.capacity !== AppState.activeEvent.ticketCount) return false
+  return true
+})
+
 onMounted(() => {
   getEventById()
   getEventTicketHolders()
@@ -91,6 +96,9 @@ async function getEventTicketHolders(){
     <div class="col-5">
       <div v-if="event.isCanceled == true">
         <h1>Event is canceled</h1>
+      </div>
+      <div v-if="isSoldOut">
+        <h1>Event is SOLD OUT</h1>
       </div>
     </div>
     <div class="col-7">
