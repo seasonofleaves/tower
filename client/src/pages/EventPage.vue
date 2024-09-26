@@ -119,9 +119,29 @@ async function getEventTicketHolders(){
         <button v-if="!isAttendingEvent" :disabled="!canAttendEvent" @click="createTicket()" class="btn btn-info">
           Get Ticket!
         </button>
+        <p v-if="isAttendingEvent">You are attending this event!</p>
       </div>
       <div v-for="ticketer in ticketerProfiles" :key="ticketer.id">
         <img class="ticketer-img" :src="ticketer.profile.picture" alt="" :title="ticketer.profile.name">
+      </div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="col-12">
+      <h4>See what people are saying...</h4>
+    </div>
+    <div class="col-md-7">
+      <div class="card p-3">
+        <form @submit.prevent="">
+          <div class="text-end">
+            <label for="comment-body">Join the conversation</label>
+          </div>
+          <textarea class="form-control" minlength="1" maxlength="500" name="comment-body" id="comment-body"></textarea>
+          <div class="text-end">
+            <button class="btn btn-info" type="submit">Post Comment</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
