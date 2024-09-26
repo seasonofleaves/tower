@@ -1,7 +1,13 @@
 <script setup>
 import { Event } from '@/models/Event.js';
+import { computed } from 'vue';
 
 const props = defineProps({ event: {type: Event, required: true}})
+
+const isSoldOut = computed(() => {
+  if(props.event.capacity !== props.event.ticketCount) return false
+  return true
+})
 
 </script>
 
@@ -19,6 +25,9 @@ const props = defineProps({ event: {type: Event, required: true}})
       </div>
       <div v-if="event.isCanceled == true">
         <span class="bg-danger">Event is cancelled</span>
+      </div>
+      <div v-if="isSoldOut">
+        <span class="bg-danger">Event is Sold Out</span>
       </div>
     </div>
   </router-link>
