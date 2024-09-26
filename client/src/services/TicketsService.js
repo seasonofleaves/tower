@@ -1,15 +1,21 @@
 import { logger } from "@/utils/Logger.js"
 import { api } from "./AxiosService.js"
-import { TicketProfiles } from "@/models/Tickets.js"
+import { TicketProfiles, TicketsPerEvent } from "@/models/Tickets.js"
 import { AppState } from "@/AppState.js"
 
 
 class TicketsService {
-  deleteTicket(ticketId) {
-    throw new Error('Method not implemented.')
+  async deleteTicket(ticketId) {
+    const response = await api.delete(`api/tickets/${ticketId}`)
+    logger.log('Deleting ticket', response.data)
+    const indexToDelete = AppState.eventTickets.findIndex(ticket => ticket.id == ticketId)
+    AppState.eventTickets.splice(indexToDelete, 1)
   }
-  getAccountTickets() {
-    
+  async getAccountTickets() {
+    const response = await api.get(`account/tickets`)
+    logger.log('Getting account tickets', response.data)
+    const accountTickets = response.data.map(ticketData => new TicketsPerEvent(ticketData))
+    AppState.eventTickets = accountTickets
   }
   async getEventTicketHolders(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
