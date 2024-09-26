@@ -8,7 +8,7 @@ export class Tickets{
   }
 }
 
-export class TicketsProfile extends Tickets{
+export class TicketProfiles extends Tickets{
   constructor(data){
     super(data)
     this.profile = new Profile(data.profile)
