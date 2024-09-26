@@ -1,5 +1,4 @@
 import { reactive } from 'vue'
-// wacky
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
   /**@type {import('@bcwdev/auth0provider-client').Identity} */
