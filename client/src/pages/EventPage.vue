@@ -1,6 +1,7 @@
 <script setup>
 
 import { AppState } from '@/AppState.js';
+import { commentsService } from '@/services/CommentsService.js';
 import { eventsService } from '@/services/EventsService.js';
 import { ticketsService } from '@/services/TicketsService.js';
 import { logger } from '@/utils/Logger.js';
@@ -14,6 +15,7 @@ const event = computed(() => AppState.activeEvent)
 const ticketerProfiles = computed(() => AppState.ticketProfiles)
 const commentData = ref({
   body: '',
+  eventId: route.params.eventId
 })
 
 const isAttendingEvent = computed(() =>{
@@ -82,8 +84,21 @@ async function getEventTicketHolders(){
   }
 }
 
+async function createComment(){
+  try {
+    logger.log('Creating comment', commentData.value)
+    const createComment = await commentsService.createComment(commentData.value)
+    resetCommentForm()
+    Pop.toast("Comment posted!", 'success', 'top')
+  } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
+
 function resetCommentForm(){
   commentData.value = {
+    eventId: '',
     body: ''
   }
 }
@@ -142,7 +157,7 @@ function resetCommentForm(){
     </div>
     <div class="col-md-7">
       <div class="card p-3">
-        <form @submit.prevent="">
+        <form @submit.prevent="createComment()">
           <div class="text-end">
             <label for="comment-body">Join the conversation</label>
           </div>
