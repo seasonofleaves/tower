@@ -84,7 +84,14 @@ async function createTicket(){
       <p>{{ event.location }}</p>
     </div>
     <div class="col-5">
-      <button @click="cancelEvent()" class="btn btn-danger" type="button">Cancel Event</button>
+      <div>
+        <button v-if="event.creator" @click="cancelEvent()" class="btn btn-danger" type="button">Cancel Event</button>
+      </div>
+      <div>
+        <button @click="createTicket()" class="btn btn-info">
+          Get Ticket!
+        </button>
+      </div>
     </div>
   </section>
 </div>
