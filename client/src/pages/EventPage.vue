@@ -126,13 +126,15 @@ function resetCommentForm(){
         <img class="img-fluid cover-img" :src="event.coverImg" alt="Image of event">
       </div>
     </div>
-    <div class="col-md-7 d-flex">
+    <div class="col-md-7 d-flex justify-content-between">
       <h1>{{ event.name }}</h1>
-      <span class="btn btn-info rounded-pill align-content-center">{{ event.type }}</span>
+      <div class="align-content-center">
+       <span class="bg-info rounded-pill align-content-center">{{ event.type }}</span>
+      </div>
     </div>
-    <div class="col-5">
+    <div class="col-4">
       <div v-if="event.isCanceled == true">
-        <h1>Event is canceled</h1>
+        <p class="fs-4 m-1 bg-danger text-center rounded-pill">Event is canceled</p>
       </div>
       <div v-if="isSoldOut">
         <h1>Event is SOLD OUT</h1>
@@ -140,10 +142,12 @@ function resetCommentForm(){
     </div>
     <div class="col-7">
       <p>{{ event.description }}</p>
-      <h4>Date and Time</h4>
-      <p>{{ event.startDate.toLocaleString() }}</p>
-      <h4>Location</h4>
-      <p>{{ event.location }}</p>
+      <div v-if="event.isCanceled == false">
+        <h4>Date and Time</h4>
+        <p>{{ event.startDate.toLocaleString() }}</p>
+        <h4>Location</h4>
+        <p>{{ event.location }}</p>
+      </div>
     </div>
     <div class="col-5">
       <div>
@@ -163,22 +167,23 @@ function resetCommentForm(){
       </div>
     </div>
   </section>
-
   <section class="row">
     <div class="col-12">
       <h4>See what people are saying...</h4>
     </div>
     <div class="col-md-7">
       <div class="card p-3">
-        <form v-if="account" @submit.prevent="createComment()">
-          <div class="text-end">
-            <label for="comment-body">Join the conversation</label>
-          </div>
-          <textarea v-model="commentData.body" class="form-control" minlength="1" maxlength="500" name="comment-body" id="comment-body"></textarea>
-          <div class="text-end">
-            <button class="btn btn-info" type="submit">Post Comment</button>
-          </div>
-        </form>
+        <div v-if="account">
+          <form v-if="event.isCanceled == false" @submit.prevent="createComment()">
+            <div class="text-end">
+              <label for="comment-body">Join the conversation</label>
+            </div>
+            <textarea v-model="commentData.body" class="form-control" minlength="1" maxlength="500" name="comment-body" id="comment-body"></textarea>
+            <div class="text-end">
+              <button class="btn btn-info" type="submit">Post Comment</button>
+            </div>
+          </form>
+        </div>
         <div v-for="comment in comments" :key="comment.id">
           <CommentCard :comment="comment"/>
         </div>
@@ -187,8 +192,6 @@ function resetCommentForm(){
   </section>
 </div>
 </template>
-
- <!-- "postProp.creatorId == account?.id" -->
 
 
 <style lang="scss" scoped>
@@ -199,11 +202,17 @@ function resetCommentForm(){
   object-position: center;
 }
 
+span{
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .cover-img{
   width: 90%;
   max-height: 50vh;
   object-fit: cover;
   object-position: center;
-
 }
 </style>

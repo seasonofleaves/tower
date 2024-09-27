@@ -9,6 +9,7 @@ import Pop from '@/utils/Pop.js';
 import { computed, onMounted, ref } from 'vue';
 
 const filterBy = ref('all')
+const account = computed(() => AppState.account)
 const events = computed(() => {
   if(filterBy.value == 'all'){
     return AppState.events
@@ -64,7 +65,7 @@ async function getAllEvents(){
   </section>
   <section class="row">
     <div class="col-6 col-md-3">
-      <button data-bs-toggle="modal" data-bs-target="#event-form" class="btn bg-info p-0 border-0 w-100">
+      <button v-if="account" data-bs-toggle="modal" data-bs-target="#event-form" class="btn bg-info p-0 border-0 w-100">
         <div>Create Event</div>
       </button>
     </div>
