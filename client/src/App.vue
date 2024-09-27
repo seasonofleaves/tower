@@ -8,7 +8,7 @@ import { AppState } from './AppState.js';
   <header class="container-fluid d-flex hero-bg">
     <Navbar />
       <section class="row">
-        <div class="col-6 align-content-center">
+        <div class="col-md-6 align-content-center">
           <div class="text-light hero-text m-3">
             <h3>Event management for people, by people</h3>
             <p>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Tower. Events are happening every day - log in to join the fun.</p>
