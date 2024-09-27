@@ -46,7 +46,7 @@ async function getAllEvents(){
     <EventForm/>
   </ModalWrapper>
   <section class="row">
-    <p>Find your interests</p>
+    <h4>Filter by your interests</h4>
     <hr/>
   </section>
   <section class="row justify-content-around">
