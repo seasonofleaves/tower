@@ -26,22 +26,35 @@ async function deleteComment(commentId){
 
 <template>
   <div class="card">
-    <section class="row">
-      <div class="col-md-1">
-        <img :src="comment.creator.picture" :alt="comment.creator.name">
+    <div class="card-body">
+      <section class="row">
+        <div class="col-2">
+          <img class="creator-img" :src="comment.creator.picture" :alt="comment.creator.name">
+        </div>
+        <div class="col-8">
+          <p class="fw-bold">{{ comment.creator.name }}</p>
+          <p class="m-0">{{ comment.body }}</p>
+        </div>
+      </section>
+      <div class="text-end">
+        <button @click="deleteComment(comment.id)" class="btn btn-danger">Remove</button>
       </div>
-    </section>
-    <div class="d-flex">
-      <span>{{ comment.creator.name }}</span>
-      <p>{{ comment.body }}</p>
     </div>
-    <div class="text-end">
-      <button @click="deleteComment(comment.id)" class="btn btn-danger">Remove</button>
     </div>
-  </div>
+    
+   
+  
 </template>
 
 
 <style lang="scss" scoped>
+.creator-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
+}
 
 </style>
