@@ -2,6 +2,7 @@
 import { eventsService } from '@/services/EventsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
+import { Modal } from 'bootstrap';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -23,10 +24,11 @@ const eventData = ref({
 async function createEvent(){
   try {
     logger.log('creating', eventData.value)
-    const createEvent = await eventsService.createEvent(eventData.value)
+    const createdEvent = await eventsService.createEvent(eventData.value)
     resetForm()
     Pop.toast("Event created", 'success', 'top')
-
+    Modal.getOrCreateInstance('#event-form').hide()
+    router.push({name: 'EventDetails', params: {eventId: createdEvent.id}})
   } catch (error) {
     Pop.error(error)
     logger.log(error)

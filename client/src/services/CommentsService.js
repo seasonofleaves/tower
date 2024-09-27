@@ -5,6 +5,12 @@ import { logger } from "@/utils/Logger.js"
 
 
 class CommentsService {
+  async deleteComment(commentId) {
+    const response = await api.delete(`api/comments/${commentId}`)
+    logger.log('Deleting comment', response.data)
+    const indexToDelete = AppState.comments.findIndex(comment => comment.id == commentId)
+    AppState.comments.splice(indexToDelete, 1)
+  }
   async getAllEventComments(eventId) {
     const response = await api.get(`api/events/${eventId}/comments/`)
     logger.log('Comments for event found', response.data)
