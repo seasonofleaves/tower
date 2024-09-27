@@ -52,7 +52,7 @@ export class EventsController extends BaseController {
   async editEvent(request, response, next) {
     try {
       const eventId = request.params.eventId
-      const userId = request.userInfo
+      const userId = request.userInfo.id
       const eventData = request.body
       const event = await eventsService.editEvent(userId, eventId, eventData)
       response.send(event)

@@ -41,7 +41,8 @@ async function getAllEvents(){
 </script>
 
 <template>
- <div class="container">
+ <div class="container-fluid">
+  <!-- <div class="hero-bg"></div> -->
   <ModalWrapper id="event-form">
     <EventForm/>
   </ModalWrapper>
@@ -79,9 +80,17 @@ async function getAllEvents(){
 </template>
 
 <style scoped lang="scss">
+
 .filter-btn{
   color: white;
   background-color: rgb(102, 94, 155);
   font-weight: 600;
 }
+.hero-bg{
+  background-image: url(/src/assets/img/social_gathering.png);
+  background-position: center;
+  background-size: cover;
+  min-height: 80vh;
+}
+
 </style>

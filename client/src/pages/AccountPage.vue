@@ -37,21 +37,23 @@ try {
 </script>
 
 <template>
-  <div class="about text-center">
-    <div v-if="account">
-      <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
-      <section class="row g-3">
-        <div v-for="ticket in ticketsPerEvent" :key="ticket.id" class="col-md-4">
-          <EventCard :event="ticket.event"/>
-          <button @click="deleteTicket(ticket.id)" class="btn btn-danger">Leave Event</button>
-        </div>
-      </section>
-
-    </div>
-    <div v-else>
-      <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
+  <div class="container">
+    <div class="about text-center">
+      <div v-if="account">
+        <h1>Welcome {{ account.name }}</h1>
+        <img class="rounded" :src="account.picture" alt="" />
+        <p>{{ account.email }}</p>
+        <section class="row g-3">
+          <div v-for="ticket in ticketsPerEvent" :key="ticket.id" class="col-md-4">
+            <EventCard :event="ticket.event"/>
+            <button @click="deleteTicket(ticket.id)" class="btn btn-danger">Leave Event</button>
+          </div>
+        </section>
+  
+      </div>
+      <div v-else>
+        <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
+      </div>
     </div>
   </div>
 </template>
