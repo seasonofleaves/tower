@@ -40,8 +40,29 @@ async function getAllEvents(){
 
 </script>
 
+<!-- 
+    <section class="row">
+      <div class="col-md-6 align-content-center">
+        <div class="text-light hero-text m-3">
+          <h3>Event management for people, by people</h3>
+          <p>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Tower. Events are happening every day - log in to join the fun.</p>
+        </div>
+      </div>
+    </section> -->
+
+
 <template>
- <div class="container">
+ <div class="container-fluid d-flex hero-bg">
+  <section class="row">
+    <div class="col-md-6 align-content-center">
+        <div class="text-light hero-text m-3">
+          <h3>Event management for people, by people</h3>
+          <p>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Tower. Events are happening every day - log in to join the fun.</p>
+        </div>
+      </div>
+  </section>
+</div>
+<div class="container">
   
   <ModalWrapper id="event-form">
     <EventForm/>
@@ -125,7 +146,7 @@ async function getAllEvents(){
   background-image: url(/src/assets/img/social_gathering.png);
   background-position: center;
   background-size: cover;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 .how-card{
   background-color: rgba(196, 196, 196, 0.351);
@@ -140,5 +161,8 @@ async function getAllEvents(){
   font-size: large;
   color: rgba(0, 0, 0, 0.558);
   font-weight: bold;
+}
+.hero-text{
+  text-shadow: black 1px 0 3px;
 }
 </style>
