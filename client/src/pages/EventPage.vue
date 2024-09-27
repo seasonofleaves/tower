@@ -10,8 +10,8 @@ import Pop from '@/utils/Pop.js';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-
 const route = useRoute()
+const account = computed(() => AppState.account)
 const comments = computed(() => AppState.comments)
 const event = computed(() => AppState.activeEvent)
 const ticketerProfiles = computed(() => AppState.ticketProfiles)
@@ -147,7 +147,7 @@ function resetCommentForm(){
     </div>
     <div class="col-5">
       <div>
-        <button v-if="event.creator" @click="cancelEvent()" class="btn btn-danger" type="button">Cancel Event</button>
+        <button v-if="event.creator.id == account?.id" @click="cancelEvent()" class="btn btn-danger" type="button">Cancel Event</button>
       </div>
       <div>
         Attending: {{ event.ticketCount }}
@@ -170,7 +170,7 @@ function resetCommentForm(){
     </div>
     <div class="col-md-7">
       <div class="card p-3">
-        <form @submit.prevent="createComment()">
+        <form v-if="account" @submit.prevent="createComment()">
           <div class="text-end">
             <label for="comment-body">Join the conversation</label>
           </div>
@@ -187,6 +187,8 @@ function resetCommentForm(){
   </section>
 </div>
 </template>
+
+ <!-- "postProp.creatorId == account?.id" -->
 
 
 <style lang="scss" scoped>

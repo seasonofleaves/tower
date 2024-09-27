@@ -1,11 +1,14 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 import { Comment } from '@/models/Comments.js';
 import { commentsService } from '@/services/CommentsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
+const account = computed(() => AppState.account)
 defineProps({ comment: {type: Comment, required: true}})
 
 async function deleteComment(commentId){
@@ -37,7 +40,7 @@ async function deleteComment(commentId){
         </div>
       </section>
       <div class="text-end">
-        <button @click="deleteComment(comment.id)" class="btn btn-danger">Remove</button>
+        <button v-if="comment.creator.id == account?.id" @click="deleteComment(comment.id)" class="btn btn-danger">Remove</button>
       </div>
     </div>
     </div>
