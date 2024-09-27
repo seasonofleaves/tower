@@ -1,11 +1,12 @@
 import { dbContext } from "../db/DbContext.js"
-import { Forbidden } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 
 class EventsService {
-  async editEvent(eventId, eventData) {
+  async editEvent(userId, eventId, eventData) {
     const eventToUpdate = await dbContext.Events.findById(eventId)
-    if (eventId.isCanceled) throw new Error(`This event is canceled`)
+    if (eventToUpdate.isCanceled) throw new BadRequest(`This event is canceled`)
+    if (userId != eventId.creatorId) throw new Forbidden(`This is not your event to edit`)
     eventToUpdate.name = eventData.name ?? eventToUpdate.name
     eventToUpdate.description = eventData.description ?? eventToUpdate.description
     await eventToUpdate.save()
